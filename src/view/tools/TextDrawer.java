@@ -3,34 +3,108 @@ package view.tools;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.text.Normalizer;
+import java.util.regex.Pattern;
 
 /**
  * Created by Damian
  */
 public class TextDrawer {
 
-    private final int letterSpacing = 2;
-    private final int wordSpacing = 6;
+    private final float factor = 1f;
+
+    private final int letterSpacing = 1;
+    private final int wordSpacing = 4;
     private final int letterWidth = 6;
-    private final int numericWidth = 3;
+    private final int numericWidth = 5;
 
-    Image lettersImage;
+    enum CHAR_TYPES { LETTER, NUMERIC, SYMBOL }
 
-    public void init() throws IOException {
-        lettersImage = ImageIO.read(this.getClass().getResource("./view/libs/img/letters.png"));
+    BufferedImage bufferedImage;
+    Image scaledImage;
+    BufferedImage postBuffer;
+
+    public TextDrawer() {
+        try {
+            init();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-//http://java-buddy.blogspot.fr/2012/11/draw-partial-scaled-image-using.html
-    public void draw(Graphics g, Position positionStart, String text) {
-        int currentIndexX = positionStart.x;
-        for(char letter : text.toCharArray()) {
-            currentIndexX += (letter == ' ' ? 6 : 2 );
-            g.drawImage(lettersImage, currentIndexX, positionStart.y, 0, 0, 0, 0, 0, 0, null);
-            currentIndexX += (Character.isLetter(letter) ? 6 : 3 );
-        }
+    public void init() throws IOException {
+         postBuffer = ImageIO.read(TextDrawer.class.getResource("/view/tools/letters.png"));
+        int scaleX = (int) (postBuffer.getWidth() * factor);
+        int scaleY = (int) (postBuffer.getHeight() * factor);
+        scaledImage = postBuffer.getScaledInstance(scaleX, scaleY, Image.SCALE_SMOOTH);
+        bufferedImage = new BufferedImage(scaleX, scaleY, BufferedImage.TYPE_INT_RGB);
+        bufferedImage.getGraphics().drawImage(scaledImage, 0, 0 , null);
+    }
 
-        g2D.dispose();
+    public void draw(Graphics2D g, Position positionStart, String text) {
+        text = deAccent(text).toUpperCase().trim();
+        int currentIndexX = 0;
+        for(char letter : text.toCharArray()) {
+            if(letter == ' ') {
+                currentIndexX +=  wordSpacing;
+                continue;
+            }
+            currentIndexX +=  letterSpacing;
+            drawLetter(g, currentIndexX, positionStart.y, letter);
+            currentIndexX += (Character.isLetter(letter) ? letterWidth : numericWidth );
+        }
+    }
+
+    private void drawLetter(Graphics2D g, int x, int y, char charToDraw) {
+        Position subImagePosition = getSubImagePosition(getCharType(charToDraw), charToDraw);
+        if(subImagePosition == null)
+            return;
+        int width = (getCharType(charToDraw) == CHAR_TYPES.LETTER ? letterWidth : numericWidth);
+        int height = 10;
+        g.drawImage(bufferedImage.getSubimage(subImagePosition.x, subImagePosition.y, width, height), null, x, y);
+    }
+
+    public String deAccent(String str) {
+        String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(nfdNormalizedString).replaceAll("");
+    }
+
+    private CHAR_TYPES getCharType(char charToFind) {
+
+        if(Character.isLetter(charToFind)) return CHAR_TYPES.LETTER;
+        else if(Character.isDigit(charToFind)) return CHAR_TYPES.NUMERIC;
+        else return CHAR_TYPES.SYMBOL;
+    }
+
+    /**
+     *   //ABCDEFGHIJKLMNOPQRSTUVWXYZ
+         //0123456789
+         //,.;?!-_
+     * @param types CHAR_TYPES of the character
+     * @param charToFind character to identify
+     * @return Position, coordonates of the image
+     */
+
+    private Position getSubImagePosition(CHAR_TYPES types, char charToFind) {
+        Position position = new Position();
+        switch (types) {
+            case LETTER:
+                position.x = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(charToFind) * (letterWidth + 1);
+                position.y = 0;
+                break;
+            case NUMERIC:
+                position.x = "1234567890".indexOf(charToFind) * (numericWidth + 1);
+                position.y = 11;
+                break;
+            case SYMBOL:
+                position.x = ",.;?!-_$€@%+=/\\><#()[]|*".indexOf(charToFind)  * (numericWidth + 1);
+                position.y = 22;
+                break;
+            default:
+                return null;
+        }
+        return position;
     }
 }

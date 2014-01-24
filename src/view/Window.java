@@ -1,5 +1,8 @@
 package view;
 
+import view.tools.Position;
+import view.tools.TextDrawer;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,7 +18,7 @@ public class Window extends JFrame{
     }
 
     private void init() {
-        this.setTitle("RGP GAME");
+        this.setTitle("RGP GAME 1");
         this.setSize(800, 600);
         Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation((int) ((screenDimension.getWidth()-this.getWidth())/2),
@@ -24,5 +27,11 @@ public class Window extends JFrame{
         this.setJMenuBar(new MenuBar());
         this.setContentPane(new MainPanel());
         this.setVisible(true);
+    }
+
+    @Override
+    public void paintComponents(Graphics g) {
+        super.paintComponents(g);
+
     }
 }

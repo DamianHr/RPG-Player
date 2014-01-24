@@ -1,3 +1,4 @@
+import view.GameDrawer;
 import view.Window;
 
 import javax.swing.*;
@@ -18,6 +19,7 @@ public class Main {
 
         try {
             //DataWorker.init();
+            new GameDrawer();
         } catch (Exception e) {
             e.printStackTrace();
         }
