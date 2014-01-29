@@ -1,8 +1,5 @@
 package view;
 
-import view.tools.Position;
-import view.tools.TextDrawer;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -26,12 +23,7 @@ public class Window extends JFrame{
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setJMenuBar(new MenuBar());
         this.setContentPane(new MainPanel());
+        this.setResizable(false);
         this.setVisible(true);
-    }
-
-    @Override
-    public void paintComponents(Graphics g) {
-        super.paintComponents(g);
-
     }
 }

@@ -13,14 +13,11 @@ import java.util.regex.Pattern;
 public class TextDrawer {
 
     private final float factor = 1f;
-
     private final int letterSpacing = 1;
     private final int wordSpacing = 4;
+    private final int characterHeigth = 10;
     private final int letterWidth = 6;
     private final int numericWidth = 5;
-
-    enum CHAR_TYPES { LETTER, NUMERIC, SYMBOL }
-
     BufferedImage bufferedImage;
     Image scaledImage;
     BufferedImage postBuffer;
@@ -34,34 +31,32 @@ public class TextDrawer {
     }
 
     public void init() throws IOException {
-         postBuffer = ImageIO.read(TextDrawer.class.getResource("/view/tools/letters.png"));
+        postBuffer = ImageIO.read(TextDrawer.class.getResource("/view/libs/image/letters.png"));
         int scaleX = (int) (postBuffer.getWidth() * factor);
         int scaleY = (int) (postBuffer.getHeight() * factor);
         scaledImage = postBuffer.getScaledInstance(scaleX, scaleY, Image.SCALE_SMOOTH);
         bufferedImage = new BufferedImage(scaleX, scaleY, BufferedImage.TYPE_INT_RGB);
-        bufferedImage.getGraphics().drawImage(scaledImage, 0, 0 , null);
+        bufferedImage.getGraphics().drawImage(scaledImage, 0, 0, null);
     }
 
     public void draw(Graphics2D g, Position positionStart, String text) {
-        text = deAccent(text).toUpperCase().trim();
-        int currentIndexX = 0;
-        for(char letter : text.toCharArray()) {
-            if(letter == ' ') {
-                currentIndexX +=  wordSpacing;
+        text = deAccent(text).trim();
+        int currentIndexX = positionStart.x;
+        for (char letter : text.toCharArray()) {
+            if (letter == ' ') {
+                currentIndexX += wordSpacing;
                 continue;
             }
-            currentIndexX +=  letterSpacing;
+            currentIndexX += letterSpacing;
             drawLetter(g, currentIndexX, positionStart.y, letter);
-            currentIndexX += (Character.isLetter(letter) ? letterWidth : numericWidth );
+            currentIndexX += (Character.isLetter(letter) ? letterWidth : numericWidth);
         }
     }
 
     private void drawLetter(Graphics2D g, int x, int y, char charToDraw) {
         Position subImagePosition = getSubImagePosition(getCharType(charToDraw), charToDraw);
-        if(subImagePosition == null)
-            return;
         int width = (getCharType(charToDraw) == CHAR_TYPES.LETTER ? letterWidth : numericWidth);
-        int height = 10;
+        int height = characterHeigth;
         g.drawImage(bufferedImage.getSubimage(subImagePosition.x, subImagePosition.y, width, height), null, x, y);
     }
 
@@ -72,17 +67,17 @@ public class TextDrawer {
     }
 
     private CHAR_TYPES getCharType(char charToFind) {
-
-        if(Character.isLetter(charToFind)) return CHAR_TYPES.LETTER;
-        else if(Character.isDigit(charToFind)) return CHAR_TYPES.NUMERIC;
+        if (Character.isLetter(charToFind)) return CHAR_TYPES.LETTER;
+        else if (Character.isDigit(charToFind)) return CHAR_TYPES.NUMERIC;
         else return CHAR_TYPES.SYMBOL;
     }
 
     /**
-     *   //ABCDEFGHIJKLMNOPQRSTUVWXYZ
-         //0123456789
-         //,.;?!-_
-     * @param types CHAR_TYPES of the character
+     * //ABCDEFGHIJKLMNOPQRSTUVWXYZ
+     * //0123456789
+     * //,.;?!-_
+     *
+     * @param types      CHAR_TYPES of the character
      * @param charToFind character to identify
      * @return Position, coordonates of the image
      */
@@ -91,20 +86,28 @@ public class TextDrawer {
         Position position = new Position();
         switch (types) {
             case LETTER:
+                position.y = Character.isUpperCase(charToFind) ? 0 : 11;
+                charToFind = Character.toUpperCase(charToFind);
                 position.x = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(charToFind) * (letterWidth + 1);
-                position.y = 0;
                 break;
             case NUMERIC:
                 position.x = "1234567890".indexOf(charToFind) * (numericWidth + 1);
-                position.y = 11;
-                break;
-            case SYMBOL:
-                position.x = ",.;?!-_$€@%+=/\\><#()[]|*".indexOf(charToFind)  * (numericWidth + 1);
                 position.y = 22;
                 break;
+            case SYMBOL:
+                position.x = ",.;?!-_$€@%+=/\\><#()[]|*'".indexOf(charToFind) * (numericWidth + 1);
+                position.y = 33;
+                break;
             default:
-                return null;
+                position.x = 0;
+                position.y = 0;
+        }
+        if (position.x < 0 || position.y < 0) {
+            position.x = 0;
+            position.y = 0;
         }
         return position;
     }
+
+    enum CHAR_TYPES {LETTER, NUMERIC, SYMBOL}
 }
