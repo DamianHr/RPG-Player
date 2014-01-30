@@ -1,4 +1,4 @@
-import view.Window;
+import view.LoginWindow;
 
 import javax.swing.*;
 
@@ -12,7 +12,7 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Window();
+                new LoginWindow();
             }
         });
     }
