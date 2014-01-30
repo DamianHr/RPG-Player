@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0d594659-0ce3-4ca0-a508-d1450c62bf8d" name="Default" comment="LoginWindow avec selection de partie">
+    <list default="true" id="0d594659-0ce3-4ca0-a508-d1450c62bf8d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/view/LoginWindow.java" afterPath="$PROJECT_DIR$/src/view/LoginWindow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/view/MainPanel.java" afterPath="$PROJECT_DIR$/src/view/MainPanel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/view/tools/WebRequester.java" afterPath="$PROJECT_DIR$/src/view/tools/WebRequester.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -75,7 +74,7 @@
       <file leaf-file-name="WebRequester.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/view/tools/WebRequester.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="129" selection-start="776" selection-end="776" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1394">
+            <state line="17" column="94" selection-start="736" selection-end="736" vertical-scroll-proportion="0.0" vertical-offset="23" max-vertical-offset="1394">
               <folding />
             </state>
           </provider>
@@ -84,14 +83,14 @@
       <file leaf-file-name="LoginWindow.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/view/LoginWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="156" column="5" selection-start="6168" selection-end="6168" vertical-scroll-proportion="0.8797654" vertical-offset="2216" max-vertical-offset="2890">
+            <state line="122" column="56" selection-start="4580" selection-end="4580" vertical-scroll-proportion="0.04735376" vertical-offset="1921" max-vertical-offset="2924">
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2984#2998#0" expanded="true" />
-                <element signature="e#4195#4209#0" expanded="true" />
-                <element signature="e#4459#5090#0" expanded="true" />
-                <element signature="e#5079#5080#0" expanded="true" />
-                <element signature="e#5855#5869#0" expanded="true" />
+                <element signature="e#3004#3018#0" expanded="true" />
+                <element signature="e#4215#4229#0" expanded="true" />
+                <element signature="e#4479#5089#0" expanded="true" />
+                <element signature="e#5078#5079#0" expanded="true" />
+                <element signature="e#5917#5931#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -648,7 +647,7 @@
       <workItem from="1391002412093" duration="8306000" />
       <workItem from="1391077395124" duration="599000" />
       <workItem from="1391102341247" duration="3166000" />
-      <workItem from="1391120368501" duration="3462000" />
+      <workItem from="1391120368501" duration="5137000" />
     </task>
     <task id="LOCAL-00001" summary="Floor + Login + Level + Portal">
       <created>1391032264182</created>
@@ -666,11 +665,15 @@
       <created>1391117178840</created>
       <updated>1391117178840</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="LoginWindow done!">
+      <created>1391123853578</created>
+      <updated>1391123853578</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="67562000" />
+    <option name="totallyTimeSpent" value="69237000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -704,7 +707,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5922222" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.57222223" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14932127" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -740,7 +743,8 @@
     <MESSAGE value="Floor + Login + Level + Portal&#10;" />
     <MESSAGE value="Images" />
     <MESSAGE value="Création du requeteur pour le WS&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Création du requeteur pour le WS&#10;" />
+    <MESSAGE value="LoginWindow done!" />
+    <option name="LAST_COMMIT_MESSAGE" value="LoginWindow done!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1090,21 +1094,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/tools/WebRequester.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="129" selection-start="776" selection-end="776" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1394">
+        <state line="17" column="94" selection-start="736" selection-end="736" vertical-scroll-proportion="0.0" vertical-offset="23" max-vertical-offset="1394">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/LoginWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="156" column="5" selection-start="6168" selection-end="6168" vertical-scroll-proportion="0.8797654" vertical-offset="2216" max-vertical-offset="2890">
+        <state line="122" column="56" selection-start="4580" selection-end="4580" vertical-scroll-proportion="0.04735376" vertical-offset="1921" max-vertical-offset="2924">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2984#2998#0" expanded="true" />
-            <element signature="e#4195#4209#0" expanded="true" />
-            <element signature="e#4459#5090#0" expanded="true" />
-            <element signature="e#5079#5080#0" expanded="true" />
-            <element signature="e#5855#5869#0" expanded="true" />
+            <element signature="e#3004#3018#0" expanded="true" />
+            <element signature="e#4215#4229#0" expanded="true" />
+            <element signature="e#4479#5089#0" expanded="true" />
+            <element signature="e#5078#5079#0" expanded="true" />
+            <element signature="e#5917#5931#0" expanded="true" />
           </folding>
         </state>
       </provider>

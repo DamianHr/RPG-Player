@@ -14,8 +14,8 @@ public class WebRequester {
         return sendRequest(urlToRequest, parameters);
     }
 
-    public static String sendDataRetrivingRequest(String urlToRequest, String username, int gameId) throws UnsupportedEncodingException {
-        String parameters = encodeParameters(new UrlParameter("user", username), new UrlParameter("game", String.valueOf(gameId)));
+    public static String sendDataRetrivingRequest(String urlToRequest, int userid, int gameId) throws UnsupportedEncodingException {
+        String parameters = encodeParameters(new UrlParameter("user",  String.valueOf(userid)), new UrlParameter("game", String.valueOf(gameId)));
         return sendRequest(urlToRequest, parameters);
     }
 
@@ -24,7 +24,7 @@ public class WebRequester {
         try {
             URL url = new URL(urlToRequest);
             connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
+            connection.setRequestMethod("GET");
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             connection.setRequestProperty("Content-Length", Integer.toString(parameters.getBytes().length));
             connection.setRequestProperty("Content-Language", "en-US");

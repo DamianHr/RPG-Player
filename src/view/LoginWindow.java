@@ -26,6 +26,7 @@ public class LoginWindow extends JFrame {
 
     final String urlToLogin = "http://localhost/rpg/index.php/service_login";
     final String urlToGetData = "http://localhost/rpg/index.php/service_game";
+    int userId = 0;
 
     JTextField textFieldUsername;
 
@@ -123,7 +124,7 @@ public class LoginWindow extends JFrame {
                 GameToSelect selected = (GameToSelect) combo.getSelectedItem();
                 //Appel WS service_game
                 try {
-                    String xml_data = WebRequester.sendDataRetrivingRequest(urlToGetData, textFieldUsername.getText(), selected.gameId);
+                    String xml_data = WebRequester.sendDataRetrivingRequest(urlToGetData, userId, selected.gameId);
                     (LoginWindow.this).setVisible(false);
                     new MainControler(xml_data);
                 } catch (UnsupportedEncodingException e1) {
@@ -146,6 +147,7 @@ public class LoginWindow extends JFrame {
         org.w3c.dom.Document document = documentBuilder.parse(stream);
 
         org.w3c.dom.Element root = document.getDocumentElement();
+        userId = Integer.valueOf(root.getAttribute("userid"));
         NodeList situations = root.getElementsByTagName("game");
 
         java.util.List<GameToSelect> games = new ArrayList<GameToSelect>();
