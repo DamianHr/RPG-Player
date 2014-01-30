@@ -14,7 +14,7 @@ public class Floor {
     private final float factor = 1f;
     public int height = 30;
     public int width = 92;
-    //public Position position;
+    public Position position;
     BufferedImage bufferedImage;
     Image scaledImage;
     BufferedImage postBuffer;
