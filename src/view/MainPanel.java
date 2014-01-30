@@ -18,10 +18,10 @@ public class MainPanel extends JPanel {
     private java.util.Timer timer;
     public static boolean isRunning;
 
-    Player player;
+    public Player player;
     Floor floor;
 
-    static java.util.List<Entity> entities = new ArrayList<Entity>();
+    public static java.util.List<Entity> entities = new ArrayList<Entity>();
 
     public MainPanel() {
         init();
@@ -38,9 +38,9 @@ public class MainPanel extends JPanel {
         floor = new Floor(Floor.FLOOR_TYPE.LIGHT_STONE);
 
         textDrawer = new TextDrawer();
-        entities.add(new Portal(new Position(300,300), Portal.PORTAL_TYPE.IN));
-        entities.add(new Portal(new Position(400,300), Portal.PORTAL_TYPE.OUT));
-        entities.add(new Portal(new Position(500,300), Portal.PORTAL_TYPE.FINAL));
+//        entities.add(new Portal(new Position(300,300), Portal.PORTAL_TYPE.IN));
+//        entities.add(new Portal(new Position(400,300), Portal.PORTAL_TYPE.OUT));
+//        entities.add(new Portal(new Position(500,300), Portal.PORTAL_TYPE.FINAL));
 
         player = new Player(new Position(400,400));
         entities.add(player);
