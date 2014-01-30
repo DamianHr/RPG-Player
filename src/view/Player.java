@@ -4,6 +4,7 @@ import view.tools.Position;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -75,24 +76,25 @@ public class Player implements Entity {
         return position;
     }
 
-    public void moveLeft() {
-        currentOrientation = PLAYER_ORIENTATION.LEFT;
-        position.x -= speed;
-    }
-
-    public void moveRight() {
-        currentOrientation = PLAYER_ORIENTATION.RIGHT;
-        position.x += speed;
-    }
-
-    public void moveUp() {
-        currentOrientation = PLAYER_ORIENTATION.UP;
-        position.y -= speed;
-    }
-
-    public void moveDown() {
-        currentOrientation = PLAYER_ORIENTATION.DOWN;
-        position.y += speed;
+    public void move(int key) {
+        switch(key) {
+            case KeyEvent.VK_UP:
+                currentOrientation = PLAYER_ORIENTATION.UP;
+                position.y -= speed;
+                break;
+            case KeyEvent.VK_RIGHT:
+                currentOrientation = PLAYER_ORIENTATION.RIGHT;
+                position.x += speed;
+                break;
+            case KeyEvent.VK_DOWN:
+                currentOrientation = PLAYER_ORIENTATION.DOWN;
+                position.y += speed;
+                break;
+            case KeyEvent.VK_LEFT:
+                currentOrientation = PLAYER_ORIENTATION.LEFT;
+                position.x -= speed;
+                break;
+        }
     }
 
     enum PLAYER_ORIENTATION {UP, DOWN, LEFT, RIGHT}

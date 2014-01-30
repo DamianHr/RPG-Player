@@ -10,12 +10,12 @@ import java.net.URLEncoder;
  */
 public class WebRequester {
     public static String sendAuthentificationRequest(String urlToRequest, String username, String password) throws UnsupportedEncodingException {
-        String parameters = encodeParameters(new UrlParameter("u", username), new UrlParameter("p", password));
+        String parameters = encodeParameters(new UrlParameter("login", username), new UrlParameter("passwd", password));
         return sendRequest(urlToRequest, parameters);
     }
 
-    public static String sendDataRetrivingRequest(String urlToRequest, String username) throws UnsupportedEncodingException {
-        String parameters = encodeParameters(new UrlParameter("u", username));
+    public static String sendDataRetrivingRequest(String urlToRequest, String username, String gameId) throws UnsupportedEncodingException {
+        String parameters = encodeParameters(new UrlParameter("user", username), new UrlParameter("game", gameId));
         return sendRequest(urlToRequest, parameters);
     }
 

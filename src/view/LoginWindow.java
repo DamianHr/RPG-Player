@@ -44,6 +44,9 @@ public class LoginWindow extends JFrame {
         containerPassword.add(textFieldPassword);
         panel.add(containerPassword);
 
+        JLabel statutLabel = new JLabel("Coucou");
+        panel.add(statutLabel);
+
         JPanel containerButtons = new JPanel(new FlowLayout());
         JButton okButton = new JButton("Ok");
         containerButtons.add(okButton);
