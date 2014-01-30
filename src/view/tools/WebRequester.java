@@ -14,8 +14,8 @@ public class WebRequester {
         return sendRequest(urlToRequest, parameters);
     }
 
-    public static String sendDataRetrivingRequest(String urlToRequest, String username, String gameId) throws UnsupportedEncodingException {
-        String parameters = encodeParameters(new UrlParameter("user", username), new UrlParameter("game", gameId));
+    public static String sendDataRetrivingRequest(String urlToRequest, String username, int gameId) throws UnsupportedEncodingException {
+        String parameters = encodeParameters(new UrlParameter("user", username), new UrlParameter("game", String.valueOf(gameId)));
         return sendRequest(urlToRequest, parameters);
     }
 

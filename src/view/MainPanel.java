@@ -19,7 +19,7 @@ public class MainPanel extends JPanel {
     private java.util.Timer timer;
     public static boolean isRunning;
 
-    Player player;
+    public static Player player;
     List<Floor> floors;
     Floor floor;
 
@@ -41,9 +41,6 @@ public class MainPanel extends JPanel {
         floors = new ArrayList<Floor>();
 
         textDrawer = new TextDrawer();
-        entities.add(new Portal(new Position(300, 300), Portal.PORTAL_TYPE.IN));
-        entities.add(new Portal(new Position(400, 300), Portal.PORTAL_TYPE.OUT));
-        entities.add(new Portal(new Position(500, 300), Portal.PORTAL_TYPE.FINAL));
 
         player = new Player(new Position(400, 400));
         entities.add(player);

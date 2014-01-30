@@ -1,9 +1,21 @@
 package view;
 
+import controller.MainControler;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import view.tools.WebRequester;
+
 import javax.swing.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 /**
@@ -11,6 +23,11 @@ import java.util.ArrayList;
  */
 public class LoginWindow extends JFrame {
     JPanel panel;
+
+    final String urlToLogin = "http://localhost/rpg/index.php/service_login";
+    final String urlToGetData = "http://localhost/rpg/index.php/service_game";
+
+    JTextField textFieldUsername;
 
     public LoginWindow() {
         init();
@@ -36,7 +53,7 @@ public class LoginWindow extends JFrame {
         JPanel containerUsername = new JPanel(new FlowLayout());
         JLabel labelUsername = new JLabel("Username", JLabel.TRAILING);
         containerUsername.add(labelUsername);
-        final JTextField textFieldUsername = new JTextField(10);
+        textFieldUsername = new JTextField(10);
         labelUsername.setLabelFor(textFieldUsername);
         containerUsername.add(textFieldUsername);
         panel.add(containerUsername);
@@ -58,11 +75,18 @@ public class LoginWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if(!textFieldUsername.getText().isEmpty() && !textFieldPassword.getPassword().toString().isEmpty()) {
+                if(!textFieldUsername.getText().isEmpty() && !String.valueOf(textFieldPassword.getPassword()).isEmpty()) {
                     //Connect WS game_login
                     boolean connected = true;
                     java.util.List<GameToSelect> gamesToSelect = new ArrayList<GameToSelect>();
-                    if(connected) {
+                    try {
+                        String xml_login = WebRequester.sendAuthentificationRequest(urlToLogin, textFieldUsername.getText(), String.valueOf(textFieldPassword.getPassword()));
+                        gamesToSelect = getGameToSelect(xml_login);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+
+                    if(!gamesToSelect.isEmpty()) {
                         createGameSelector(gamesToSelect);
                     }
                 }
@@ -98,9 +122,13 @@ public class LoginWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 GameToSelect selected = (GameToSelect) combo.getSelectedItem();
                 //Appel WS service_game
-
-                //
-
+                try {
+                    String xml_data = WebRequester.sendDataRetrivingRequest(urlToGetData, textFieldUsername.getText(), selected.gameId);
+                    (LoginWindow.this).setVisible(false);
+                    new MainControler(xml_data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 
@@ -109,6 +137,23 @@ public class LoginWindow extends JFrame {
         panel.add(container);
         this.setSize(300, 200);
         panel.repaint();
+    }
+
+    private java.util.List<GameToSelect> getGameToSelect(String xmlData) throws IOException, SAXException, ParserConfigurationException {
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder= docFactory.newDocumentBuilder();
+        InputStream stream = new ByteArrayInputStream(xmlData.getBytes());
+        org.w3c.dom.Document document = documentBuilder.parse(stream);
+
+        org.w3c.dom.Element root = document.getDocumentElement();
+        NodeList situations = root.getElementsByTagName("game");
+
+        java.util.List<GameToSelect> games = new ArrayList<GameToSelect>();
+        for(int i = 0; i < situations.getLength(); ++i){
+            org.w3c.dom.Element situation = (org.w3c.dom.Element)situations.item(i);
+            games.add(new GameToSelect(situation.getTextContent(), Integer.valueOf(situation.getAttribute("id"))));
+        }
+        return games;
     }
 
     class GameToSelect {
