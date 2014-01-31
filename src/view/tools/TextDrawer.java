@@ -68,6 +68,13 @@ public class TextDrawer {
         draw(g ,position, "Portal : " + text);
     }
 
+    public void drawEndGame(Graphics2D g, String text) {
+        Position position = new Position(50/2, 400/2);
+        g.scale(2,2);
+        draw(g ,position, "The End... " + text);
+        g.scale(0.5,0.5);
+    }
+
     private void drawLetter(Graphics2D g, int x, int y, char charToDraw) {
         Position subImagePosition = getSubImagePosition(getCharType(charToDraw), charToDraw);
         int width = (getCharType(charToDraw) == CHAR_TYPES.LETTER ? letterWidth : numericWidth);

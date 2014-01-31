@@ -13,7 +13,7 @@ import java.io.IOException;
 public class Floor {
     private final float factor = 1f;
     public static int height = 30;
-    public static int width = 92;
+    public static int width = 30;
     public Position position;
     BufferedImage bufferedImage;
     Image scaledImage;

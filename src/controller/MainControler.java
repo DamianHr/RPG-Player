@@ -44,19 +44,17 @@ public class MainControler {
     private void setupLevelsEntities(){
         resetPlayerPosition();
         entities.clear();
-        entities.add(view.player);
-
         view.actions.clear();
 
         view.questionString = currentDepth.question;
         view.situationString = currentDepth.exposition;
+        view.contextualString = null;
 
         if(0 == currentDepth.entrances.size()){
             //TODO end game
-            view.contextualString = "THE END";
+            view.endGameString = "You earned "+playerScore+" on this game";
             return;
         }
-
 
         int middle = 400;
         int bellowPortal = 150 + Portal.height ;
@@ -70,7 +68,6 @@ public class MainControler {
         for(int  i = padding; i < 800 - padding; i += Floor.width){
             view.floors.add(new Floor(Floor.FLOOR_TYPE.LIGHT_STONE, new Position(i,bellowPortal)));
         }
-
 
 
         //TODO dynamic witdh
@@ -127,5 +124,8 @@ public class MainControler {
                 }
             });
         }
+
+        //so player is printed over portals
+        entities.add(view.player);
     }
 }

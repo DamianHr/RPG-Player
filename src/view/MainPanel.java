@@ -29,6 +29,7 @@ public class MainPanel extends JPanel {
     public String contextualString = null;
     public String questionString = null;
     public String situationString = null;
+    public String endGameString = null;
 
     public java.util.List<LoopedActions> actions = new CopyOnWriteArrayList<LoopedActions>();//Collections.synchronizedList(new ArrayList<LoopedActions>());
 
@@ -80,13 +81,15 @@ public class MainPanel extends JPanel {
         super.paint(g);
         Graphics2D g2D = (Graphics2D) g;
 
-        int marginHorizontal = Floor.width*2;
-        int marginVertical = Floor.height*2;
-//        for(int i = marginHorizontal; i < (this.getWidth()-marginHorizontal); i+=floor.width) {
-//            for(int y = marginVertical; y < (this.getHeight()-marginVertical); y+=floor.height) {
-//                floor.paint(g2D, new Position(i, y));
-//            }
-//        }
+        textDrawer.drawPortalDescription(g2D, null == contextualString ? "" : contextualString);
+        textDrawer.drawQuestion(g2D, null == questionString ? "" : questionString);
+        textDrawer.drawExposition(g2D, null == situationString ? "" : situationString);
+
+        if(null != endGameString){
+            textDrawer.drawEndGame(g2D, endGameString);
+            return;
+        }
+
 
         synchronized (floors){
             Iterator i = floors.iterator();
@@ -99,23 +102,12 @@ public class MainPanel extends JPanel {
 
 
         synchronized (entities){
-//        for(Entity entity : entities) {
-//            entity.paint(g2D);
-//        }
-
             Iterator i = entities.iterator();
             while (i.hasNext()){
                 ((Entity)i.next()).paint(g2D);
 
             }
         }
-//        if(isRunning) {
-//            textDrawer.drawExposition(g2D, "PLAYYYYY come on !!");
-//        }
-//        else {
-//            textDrawer.drawExposition(g2D, "game paused, c'on, continue !");
-//        }
-
 
             textDrawer.drawPortalDescription(g2D, null == contextualString ? "" : contextualString);
             textDrawer.drawQuestion(g2D, null == questionString ? "" : questionString);
