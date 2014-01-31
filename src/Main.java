@@ -1,4 +1,5 @@
 import view.LoginWindow;
+import view.Window;
 
 import javax.swing.*;
 
@@ -13,6 +14,7 @@ public class Main {
             @Override
             public void run() {
                 new LoginWindow();
+
             }
         });
     }

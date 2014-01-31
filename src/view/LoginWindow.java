@@ -24,8 +24,8 @@ import java.util.ArrayList;
 public class LoginWindow extends JFrame {
     JPanel panel;
 
-    final String urlToLogin = "http://localhost/rpg/index.php/service_login";
-    final String urlToGetData = "http://localhost/rpg/index.php/service_game";
+    final String urlToLogin = "http://localhost/rpgmaker/index.php/service_login";
+    final String urlToGetData = "http://localhost/rpgmaker/index.php/service_game";
     int userId = 0;
 
     JTextField textFieldUsername;

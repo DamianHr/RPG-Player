@@ -1,14 +1,16 @@
 package view;
 
+import view.tools.LoopedActions;
 import view.tools.Position;
 import view.tools.TextDrawer;
 
 import javax.swing.*;
+import javax.swing.text.html.HTMLDocument;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.*;
-import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by Damian
@@ -19,11 +21,14 @@ public class MainPanel extends JPanel {
     private java.util.Timer timer;
     public static boolean isRunning;
 
-    public static Player player;
-    List<Floor> floors;
+    public Player player;
     Floor floor;
 
-    public static java.util.List<Entity> entities = new ArrayList<Entity>();
+    public static java.util.List<Entity> entities = new CopyOnWriteArrayList<Entity>();//Collections.synchronizedList(new ArrayList<Entity>());
+
+    public String contextualString = null;
+
+    public java.util.List<LoopedActions> actions = new CopyOnWriteArrayList<LoopedActions>();//Collections.synchronizedList(new ArrayList<LoopedActions>());
 
     public MainPanel() {
         init();
@@ -38,11 +43,13 @@ public class MainPanel extends JPanel {
         this.addKeyListener(new KeyboardListerner());
 
         floor = new Floor(Floor.FLOOR_TYPE.LIGHT_STONE);
-        floors = new ArrayList<Floor>();
 
         textDrawer = new TextDrawer();
+//        entities.add(new Portal(new Position(300,300), Portal.PORTAL_TYPE.IN));
+//        entities.add(new Portal(new Position(400,300), Portal.PORTAL_TYPE.OUT));
+//        entities.add(new Portal(new Position(500,300), Portal.PORTAL_TYPE.FINAL));
 
-        player = new Player(new Position(400, 400));
+        player = new Player(new Position(400,400));
         entities.add(player);
         isRunning = true;
         gameLoop();
@@ -68,33 +75,57 @@ public class MainPanel extends JPanel {
         super.paint(g);
         Graphics2D g2D = (Graphics2D) g;
 
-        int marginHorizontal = floor.width * 2;
-        int marginVertical = floor.height * 2;
-        for (int i = marginHorizontal; i < (this.getWidth() - marginHorizontal); i += floor.width) {
-            for (int y = marginVertical; y < (this.getHeight() - marginVertical); y += floor.height) {
-                floor.position = new Position(i, y);
-                floor.paint(g2D, floor.position);
+        int marginHorizontal = floor.width*2;
+        int marginVertical = floor.height*2;
+        for(int i = marginHorizontal; i < (this.getWidth()-marginHorizontal); i+=floor.width) {
+            for(int y = marginVertical; y < (this.getHeight()-marginVertical); y+=floor.height) {
+                floor.paint(g2D, new Position(i, y));
             }
         }
 
-        for (Entity entity : entities) {
-            entity.paint(g2D);
+        synchronized (entities){
+//        for(Entity entity : entities) {
+//            entity.paint(g2D);
+//        }
+
+            Iterator i = entities.iterator();
+            while (i.hasNext()){
+                ((Entity)i.next()).paint(g2D);
+
+            }
         }
-        if (isRunning) {
-            textDrawer.draw(g2D, new Position((this.getWidth() / 2) - 70, 30), "PLAYYYYY come on !!");
-        } else {
-            textDrawer.draw(g2D, new Position((this.getWidth() / 2) - 70, 30), "game paused, c'on, continue !");
+        if(isRunning) {
+            textDrawer.draw(g2D, new Position((this.getWidth()/2)-70, 30), "PLAYYYYY come on !!");
+        }
+        else {
+            textDrawer.draw(g2D, new Position((this.getWidth()/2)-70, 30), "game paused, c'on, continue !");
+        }
+
+        if(null != contextualString){
+            textDrawer.draw(g2D, new Position((this.getWidth()/2)-70, 200), contextualString);
         }
     }
 
     public void update() {
-        if (!isRunning) return;
+        if(!isRunning) return;
         for (Entity entity : entities) {
             entity.update(0);
         }
+
+        if(null != actions ){
+            synchronized (actions){
+                Iterator i = actions.iterator();
+                while (i.hasNext()){
+                    ((LoopedActions)i.next()).execute();
+
+                }
+            }
+        }
+//        for(LoopedActions a : actions)
+//            a.execute();
     }
 
-    public static boolean isPossibleMove(Player player, List<Floor> floors, Position nextPosition) {
+    public static boolean isPossibleMove(Player player, java.util.List<Floor> floors, Position nextPosition) {
         boolean topCornerFound = false, bottomCornerFound = false;
         for (Floor floor : floors) {
             if (floor.position.x <= nextPosition.x && floor.position.y <= nextPosition.y)

@@ -12,8 +12,8 @@ import java.io.IOException;
  */
 public class Portal implements Entity {
     private final float factor = 1f;
-    public int height = 28;
-    public int width = 24;
+    public static int height = 28;
+    public static int width = 24;
     public Position position;
     private BufferedImage bufferedImage;
     private Image scaledImage;
