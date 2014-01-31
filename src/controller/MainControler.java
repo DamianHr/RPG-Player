@@ -59,7 +59,7 @@ public class MainControler {
 
 
         int middle = 400;
-        int bellowPortal = 300 + Portal.height ;
+        int bellowPortal = 150 + Portal.height ;
 
         view.floors.clear();
 
@@ -90,7 +90,7 @@ public class MainControler {
 
             final Entrance entrance = currentDepth.entrances.get(i);
             final int xPortal = padding+i* spacer;
-            final int yPortal = 300;
+            final int yPortal = 150;
             Position portalPos = new Position(xPortal, yPortal);
             entities.add(new Portal(portalPos, Portal.PORTAL_TYPE.IN));
             view.floors.add(new Floor(Floor.FLOOR_TYPE.GREY_STONE, portalPos));

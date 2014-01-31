@@ -24,11 +24,12 @@ import java.util.ArrayList;
 public class LoginWindow extends JFrame {
     JPanel panel;
 
-    final String urlToLogin = "http://localhost/rpgmaker/index.php/service_login";
-    final String urlToGetData = "http://localhost/rpgmaker/index.php/service_game";
+    final String urlToLogin = "http://localhost/rpg/index.php/service_login";
+    final String urlToGetData = "http://localhost/rpg/index.php/service_game";
     int userId = 0;
 
     JTextField textFieldUsername;
+    JLabel statutLabel;
 
     public LoginWindow() {
         init();
@@ -67,7 +68,7 @@ public class LoginWindow extends JFrame {
         containerPassword.add(textFieldPassword);
         panel.add(containerPassword);
 
-        JLabel statutLabel = new JLabel("Coucou");
+        statutLabel = new JLabel("");
         panel.add(statutLabel);
 
         JPanel containerButtons = new JPanel(new FlowLayout());
@@ -78,17 +79,25 @@ public class LoginWindow extends JFrame {
 
                 if(!textFieldUsername.getText().isEmpty() && !String.valueOf(textFieldPassword.getPassword()).isEmpty()) {
                     //Connect WS game_login
-                    boolean connected = true;
                     java.util.List<GameToSelect> gamesToSelect = new ArrayList<GameToSelect>();
                     try {
                         String xml_login = WebRequester.sendAuthentificationRequest(urlToLogin, textFieldUsername.getText(), String.valueOf(textFieldPassword.getPassword()));
                         gamesToSelect = getGameToSelect(xml_login);
+                        statutLabel.setText("");
+                        LoginWindow.this.repaint();
                     } catch (Exception e1) {
+                        statutLabel.setText("Error on login");
+                        LoginWindow.this.repaint();
                         e1.printStackTrace();
                     }
 
                     if(!gamesToSelect.isEmpty()) {
                         createGameSelector(gamesToSelect);
+                        statutLabel.setText("");
+                        LoginWindow.this.repaint();
+                    } else {
+                        statutLabel.setText("No game found");
+                        LoginWindow.this.repaint();
                     }
                 }
             }
@@ -128,6 +137,8 @@ public class LoginWindow extends JFrame {
                     (LoginWindow.this).setVisible(false);
                     new MainControler(xml_data);
                 } catch (UnsupportedEncodingException e1) {
+                    statutLabel.setText("Error on game retrieving");
+                    LoginWindow.this.repaint();
                     e1.printStackTrace();
                 }
             }
