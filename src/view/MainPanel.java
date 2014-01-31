@@ -5,11 +5,10 @@ import view.tools.Position;
 import view.tools.TextDrawer;
 
 import javax.swing.*;
-import javax.swing.text.html.HTMLDocument;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.*;
+import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -95,14 +94,15 @@ public class MainPanel extends JPanel {
             }
         }
         if(isRunning) {
-            textDrawer.draw(g2D, new Position((this.getWidth()/2)-70, 30), "PLAYYYYY come on !!");
+            textDrawer.drawExposition(g2D, "PLAYYYYY come on !!");
         }
         else {
-            textDrawer.draw(g2D, new Position((this.getWidth()/2)-70, 30), "game paused, c'on, continue !");
+            textDrawer.drawExposition(g2D, "game paused, c'on, continue !");
         }
 
         if(null != contextualString){
-            textDrawer.draw(g2D, new Position((this.getWidth()/2)-70, 200), contextualString);
+            textDrawer.drawPortalDescription(g2D, contextualString);
+            textDrawer.drawQuestion(g2D, contextualString);
         }
     }
 

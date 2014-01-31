@@ -39,7 +39,7 @@ public class TextDrawer {
         bufferedImage.getGraphics().drawImage(scaledImage, 0, 0, null);
     }
 
-    public void draw(Graphics2D g, Position positionStart, String text) {
+    private void draw(Graphics2D g, Position positionStart, String text) {
         text = deAccent(text).trim();
         int currentIndexX = positionStart.x;
         for (char letter : text.toCharArray()) {
@@ -51,6 +51,21 @@ public class TextDrawer {
             drawLetter(g, currentIndexX, positionStart.y, letter);
             currentIndexX += (Character.isLetter(letter) ? letterWidth : numericWidth);
         }
+    }
+
+    public void drawExposition(Graphics2D g, String text) {
+        Position position = new Position(250, 15);
+        draw(g ,position, "Situation : " + text);
+    }
+
+    public void drawQuestion(Graphics2D g, String text) {
+        Position position = new Position(250, 30);
+        draw(g ,position, "Question : " + text);
+    }
+
+    public void drawPortalDescription(Graphics2D g, String text) {
+        Position position = new Position(250, 45);
+        draw(g ,position, "Portal : " + text);
     }
 
     private void drawLetter(Graphics2D g, int x, int y, char charToDraw) {
@@ -95,7 +110,7 @@ public class TextDrawer {
                 position.y = 22;
                 break;
             case SYMBOL:
-                position.x = ",.;?!-_$€@%+=/\\><#()[]|*'".indexOf(charToFind) * (numericWidth + 1);
+                position.x = ",.:?!-_$€@%+=/\\><#()[]|*'".indexOf(charToFind) * (numericWidth + 1);
                 position.y = 33;
                 break;
             default:
