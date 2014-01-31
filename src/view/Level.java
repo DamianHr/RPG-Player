@@ -5,7 +5,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import sun.awt.AWTAutoShutdown;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,7 +13,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -67,6 +65,20 @@ public class Level {
     }
 
 
+    private Element findFirstChildByTag(Element element, String name){
+        Node current = element.getFirstChild();
+
+        while(null != current){
+
+            if(name.equals(current.getNodeName()))
+                return (Element)current;
+
+            current = current.getNextSibling();
+        }
+
+        return null;
+    }
+
 
     public Level(String xmlString) {
 
@@ -92,19 +104,16 @@ public class Level {
                 String exposition = situation.getElementsByTagName(EXPOSITION).item(0).getTextContent();
                 String question = "";
 
-                NodeList questions = situation.getElementsByTagName(QUESTION);
-                Element questionElement;
+                Element questionElement = findFirstChildByTag(situation, QUESTION);
 
                 ArrayList<Entrance> entrances = new ArrayList<Entrance>();
                 //get question label + create hypothetical entrances
-                if(0 < questions.getLength() && null != (questionElement = (Element) questions.item(i))){
+                if(null != questionElement){
                     question = questionElement.getAttribute(LABEL);
-                    NodeList answerpoolList = questionElement.getElementsByTagName(ANSWERPOOL);
-                    Element answerpool;
+                    Element answerpool = findFirstChildByTag(questionElement, ANSWERPOOL);
 
                     //answers -> entrances
-
-                    if(0 < answerpoolList.getLength() && null != (answerpool = (Element) answerpoolList.item(0))){
+                    if(null != answerpool){
                         Node answer = answerpool.getFirstChild();
 
                         while(null != answer){
