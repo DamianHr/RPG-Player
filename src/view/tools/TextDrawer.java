@@ -40,17 +40,41 @@ public class TextDrawer {
     }
 
     private void draw(Graphics2D g, Position positionStart, String text) {
-        text = deAccent(text).trim();
+        text = wrap(deAccent(text).trim(), 85);
         int currentIndexX = positionStart.x;
         for (char letter : text.toCharArray()) {
             if (letter == ' ') {
                 currentIndexX += wordSpacing;
                 continue;
+            }else if(letter == '\n'){
+                positionStart.y+=15;
+                currentIndexX = positionStart.x;
             }
             currentIndexX += letterSpacing;
             drawLetter(g, currentIndexX, positionStart.y, letter);
             currentIndexX += (Character.isLetter(letter) ? letterWidth : numericWidth);
         }
+    }
+
+    private String wrap(String text, int lenght){
+        String[] words = text.split("\\s");
+
+        StringBuilder ans = new StringBuilder();
+
+        int curLenght = 0;
+
+        for(String word : words){
+            curLenght += word.length();
+            if(curLenght <= lenght){
+                ans.append(" ");
+            }else{
+                ans.append("\n");
+                curLenght = 0;
+            }
+            ans.append(word);
+        }
+        return ans.substring(1);
+
     }
 
     public void drawExposition(Graphics2D g, String text) {
@@ -59,19 +83,19 @@ public class TextDrawer {
     }
 
     public void drawQuestion(Graphics2D g, String text) {
-        Position position = new Position(50, 30);
+        Position position = new Position(50, 45);
         draw(g ,position, "Question : " + text);
     }
 
     public void drawPortalDescription(Graphics2D g, String text) {
-        Position position = new Position(50, 45);
+        Position position = new Position(50, 75);
         draw(g ,position, "Portal : " + text);
     }
 
     public void drawEndGame(Graphics2D g, String text) {
         Position position = new Position(50/2, 400/2);
         g.scale(2,2);
-        draw(g ,position, "The End... " + text);
+        draw(g, position, "The End... " + text);
         g.scale(0.5,0.5);
     }
 
