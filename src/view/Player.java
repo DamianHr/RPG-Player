@@ -21,7 +21,7 @@ public class Player implements Entity {
     Image scaledImage;
     BufferedImage postBuffer;
     int subImageSubPositionX = 0;
-    private int speed = 3;
+    private int speed = 10;
 
     public Player(Position position) {
         this.position = position;
@@ -77,23 +77,29 @@ public class Player implements Entity {
     }
 
     public void move(int key) {
-        switch(key) {
+        Position p = new Position(position.x, position.y);
+
+        switch (key) {
             case KeyEvent.VK_UP:
                 currentOrientation = PLAYER_ORIENTATION.UP;
-                position.y -= speed;
+                p.y -= speed;
                 break;
             case KeyEvent.VK_RIGHT:
                 currentOrientation = PLAYER_ORIENTATION.RIGHT;
-                position.x += speed;
+                p.x += speed;
                 break;
             case KeyEvent.VK_DOWN:
                 currentOrientation = PLAYER_ORIENTATION.DOWN;
-                position.y += speed;
+                p.y += speed;
                 break;
             case KeyEvent.VK_LEFT:
                 currentOrientation = PLAYER_ORIENTATION.LEFT;
-                position.x -= speed;
+                p.x -= speed;
                 break;
+        }
+
+        if (MainPanel.isPossibleMove(this, p)) {
+            position = p;
         }
     }
 

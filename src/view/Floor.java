@@ -12,8 +12,8 @@ import java.io.IOException;
  */
 public class Floor {
     private final float factor = 1f;
-    public int height = 30;
-    public int width = 92;
+    public static int height = 30;
+    public static int width = 92;
     public Position position;
     BufferedImage bufferedImage;
     Image scaledImage;
@@ -21,7 +21,8 @@ public class Floor {
     int subImageSubPositionX = 0;
     FLOOR_TYPE currentType;
 
-    public Floor(FLOOR_TYPE currentType) {
+    public Floor(FLOOR_TYPE currentType, Position position) {
+        this.position = position;
         this.currentType = currentType;
         try {
             init();
@@ -39,7 +40,7 @@ public class Floor {
         bufferedImage.getGraphics().drawImage(scaledImage, 0, 0, null);
     }
 
-    public void paint(Graphics2D g, Position position) {
+    public void paint(Graphics2D g) {
         Position subImagePosition = getSubImagePosition();
         g.drawImage(bufferedImage.getSubimage(subImagePosition.x + subImageSubPositionX, subImagePosition.y, width, height), null, position.x, position.y);
     }
@@ -64,5 +65,5 @@ public class Floor {
         return position;
     }
 
-    enum FLOOR_TYPE {LIGHT_STONE, GREEN_STONE, GREY_STONE, BLACK_STONE}
+    public enum FLOOR_TYPE {LIGHT_STONE, GREEN_STONE, GREY_STONE, BLACK_STONE}
 }

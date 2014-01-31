@@ -54,17 +54,17 @@ public class TextDrawer {
     }
 
     public void drawExposition(Graphics2D g, String text) {
-        Position position = new Position(250, 15);
+        Position position = new Position(50, 15);
         draw(g ,position, "Situation : " + text);
     }
 
     public void drawQuestion(Graphics2D g, String text) {
-        Position position = new Position(250, 30);
+        Position position = new Position(50, 30);
         draw(g ,position, "Question : " + text);
     }
 
     public void drawPortalDescription(Graphics2D g, String text) {
-        Position position = new Position(250, 45);
+        Position position = new Position(50, 45);
         draw(g ,position, "Portal : " + text);
     }
 
